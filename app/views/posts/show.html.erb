@@ -1,0 +1,21 @@
+<h2>Post title: <%= @post.title %></h2>
+
+<%= @post.body %>
+
+<div><%= link_to 'edit this post', edit_post_path(@post) %> | <%= link_to "delete post", post_path(@post), method: :delete %></div>
+
+<h3>Comments:</h3>
+<ul>
+<% @post.comments.each do |comment| %>
+  <li><%= comment.body %></li>
+  <div><%= link_to "edit comment", edit_post_comment_path(comment) %></div>
+<% end %>
+</ul>
+
+<h4>Add a comment:</h4>
+<%= form_for([@post, @post.comments.build]) do |f| %>
+  <div><%= f.hidden_field :post_id, value: @post.id %></div>
+  <div><%= f.label :body %></div>
+  <div><%= f.text_area :body %></div>
+  <div><%= f.submit %></div>
+<% end %>
